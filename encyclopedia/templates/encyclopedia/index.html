@@ -7,9 +7,13 @@
 {% block body %}
     <h1>All Pages</h1>
 
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+
     <ul>
         {% for entry in entries %}
-            <li><a href="{% url 'article' entry %}">{{entry}}</a></li>
+            <li><a href="{% url 'encyclopedia:article' entry %}">{{entry}}</a></li>
         {% endfor %}
     </ul>
 
