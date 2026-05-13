@@ -30,3 +30,16 @@ def article(request, name):
         "entry" : util.get_entry(name),
         "name" : name
     }) 
+    
+def add(request):
+    if request.method == "POST":
+        title = request.POST.get("title")
+        content = request.POST.get("content")
+        if any(title in s for s in util.list_entries()):
+            return render(request,"encyclopedia/add.html", {
+                "error" : "This article already exists"
+            })
+        else:
+            util.save_entry(title,content)
+            return HttpResponseRedirect(reverse("encyclopedia:article", args=[title]))
+    return render(request, "encyclopedia/add.html")
